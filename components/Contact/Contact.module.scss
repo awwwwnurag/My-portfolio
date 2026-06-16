@@ -67,11 +67,22 @@
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
 
-  &:hover,
-  &:active {
+  &:hover:not(:disabled),
+  &:active:not(:disabled) {
     background-position: 98%;
     color: #fff;
-    box-shadow: 0 0 1rem theme("colors.indigo.dark");
+    box-shadow: 0 0 1rem theme("colors.indigo.dark"), 0 4px 20px rgba(139, 49, 255, 0.4);
+    transform: translateY(-2px);
+    --left-wing-background: var(--primary-dark);
+    --left-body-background: var(--primary-dark);
+    --right-wing-background: var(--primary-dark);
+    --right-body-background: var(--primary-dark);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
   }
 
   .plane,
@@ -113,6 +124,7 @@
           translateZ(0);
         z-index: var(--z-index, 2);
         background: var(--background, var(--left-wing-background));
+        transition: background 0.3s ease-in-out;
         clip-path: polygon(
           calc(var(--first-x, var(--left-wing-first-x)) * 1%)
             calc(var(--first-y, var(--left-wing-first-y)) * 1%),

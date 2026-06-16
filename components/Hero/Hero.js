@@ -4,15 +4,24 @@ import gsap from "gsap";
 import Button from "../Button/Button";
 import Profiles from "../Profiles/Profiles";
 import styles from "./Hero.module.scss";
-import { MENULINKS, TYPED_STRINGS, METADATA } from "../../constants";
+import { MENULINKS, TYPED_STRINGS, METADATA, PROJECTS } from "../../constants";
 
 const options = {
   strings: TYPED_STRINGS,
   typeSpeed: 50,
   startDelay: 1500,
   backSpeed: 50,
-  backDelay: 8000,
+  backDelay: 1500,
   loop: true,
+};
+
+const getProjectTagline = (project) => {
+  if (project.name === "Expense Tracker") return "Personal Finance Tracker (Chart.js)";
+  if (project.name === "Campus Crave") return "Smart Food Ordering (YOLOv8)";
+  if (project.name === "Edu-Bridge") return "E-Learning Platform (Express & JS)";
+  if (project.name === "Safar") return "AI Travel Itinerary (Gemini AI)";
+  if (project.name === "Sky Buddy") return "Weather Application (OpenWeather API)";
+  return project.tags ? project.tags.slice(0, 2).join(" & ") : "";
 };
 
 const Hero = () => {
@@ -52,7 +61,9 @@ const Hero = () => {
       <style jsx global>
         {`
           .typed-cursor {
-            font-size: 2rem;
+            font-size: 2.2rem;
+            color: #8b31ff;
+            text-shadow: 0 0 10px rgba(139, 49, 255, 0.6);
           }
 
           /* Drop-in animation for container */
@@ -86,18 +97,24 @@ const Hero = () => {
             position: relative;
           }
 
-          .id-card {
+          .id-card-wrapper {
             width: 290px;
             height: 420px;
+            position: relative;
+            z-index: 10;
+          }
+
+          .id-card {
+            width: 100%;
+            height: 100%;
             position: relative;
             transform-style: preserve-3d;
             transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
-            z-index: 10;
           }
 
-          /* Trigger card flip on hover */
-          .id-card:hover {
+          /* Trigger card flip on wrapper hover */
+          .id-card-wrapper:hover .id-card {
             transform: rotateY(180deg);
           }
 
@@ -131,40 +148,72 @@ const Hero = () => {
             transition: opacity 0.4s ease;
           }
 
-          /* Twist the lanyard when card is hovered */
-          .id-card:hover ~ svg .lanyard-twisted {
+          /* Twist the lanyard when wrapper is hovered */
+          .id-card-wrapper:hover ~ svg .lanyard-twisted {
             opacity: 1;
           }
 
-          .id-card:hover ~ svg .lanyard-untwisted {
+          .id-card-wrapper:hover ~ svg .lanyard-untwisted {
             opacity: 0;
           }
         `}
       </style>
-      <div className="flex flex-col pt-40 md:pt-0 select-none">
-        <h5
-          className={`${styles.intro} font-mono font-medium text-indigo-light staggered-reveal`}
-        >
-          Hi, my name is
+
+      {/* Decorative Glow Blobs for premium backdrop glow */}
+      <div className="absolute top-1/4 left-[-100px] w-96 h-96 rounded-full bg-purple/15 blur-[120px] pointer-events-none -z-10" />
+      <div className="absolute bottom-1/4 left-1/3 w-[450px] h-[450px] rounded-full bg-indigo-dark/10 blur-[150px] pointer-events-none -z-10" />
+      <div className="absolute top-1/3 right-1/4 w-80 h-80 rounded-full bg-[#00f5d4]/5 blur-[120px] pointer-events-none -z-10" />
+
+      <div className="flex flex-col pt-40 md:pt-0 select-none z-10 max-w-2xl">
+        {/* Status indicator / Greeting pill */}
+        <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 w-fit mb-5 staggered-reveal backdrop-blur-md shadow-sm">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00f5d4] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00f5d4]"></span>
+          </span>
+          <h5 className="font-mono text-xs tracking-wider text-gray-light-2 uppercase">
+            Available for Opportunities
+          </h5>
+        </div>
+
+        {/* Hello, I am */}
+        <h5 className="font-mono text-lg sm:text-xl text-[#9f55ff] font-medium tracking-wide mb-2 staggered-reveal">
+          Hi there, I am
         </h5>
-        <h1 className={`${styles.heroName} text-white text-6xl font-semibold`}>
-          <span className={`relative ${styles.emphasize} staggered-reveal`}>
+
+        {/* Heading name with overlapping designer-developer style */}
+        <h1 className="relative flex flex-col font-sans font-black tracking-tighter select-none mt-2 mb-3">
+          {/* Behind Text: ANURAG */}
+          <span className="staggered-reveal block text-7xl sm:text-8xl md:text-[9.5rem] text-transparent bg-clip-text bg-gradient-to-b from-purple to-transparent uppercase leading-none select-none">
             {firstName}
           </span>
-          <span className="staggered-reveal"> {lastName}</span>
+          {/* Front Text: ARYAN */}
+          <span className="staggered-reveal block text-5xl sm:text-6xl md:text-[7.5rem] text-white uppercase leading-none -mt-8 sm:-mt-12 md:-mt-16 select-none relative z-10 pl-2">
+            {lastName}
+          </span>
         </h1>
-        <p>
+
+        {/* Description container with stable layout height */}
+        <div className="staggered-reveal min-h-[4rem] flex items-center mb-5">
           <span
             ref={typedElementRef}
-            className="staggered-reveal text-3xl text-gray-light-3 font-mono leading-relaxed"
+            className="text-xl sm:text-3xl text-gray-light-3 font-mono leading-relaxed tracking-tight"
           />
-        </p>
-        <div className="staggered-reveal">
+        </div>
+
+        <div className="staggered-reveal mb-2">
           <Profiles />
         </div>
-        <div className="staggered-reveal pt-4">
-          <Button href={`#${MENULINKS[4].ref}`} classes="link" type="primary">
-            Let&apos;s Talk
+
+        <div className="flex flex-wrap gap-4 pt-4 staggered-reveal">
+          <Button href={`#${MENULINKS[5].ref}`} classes="link py-3 px-8 text-sm sm:text-base font-semibold tracking-wider transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg hover:shadow-purple/20" type="primary">
+            Let&rsquo;s Connect
+          </Button>
+          <Button href={`#${MENULINKS[2].ref}`} classes="link py-3 px-8 text-sm sm:text-base font-semibold tracking-wider transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg hover:shadow-purple/20" type="secondary">
+            My Work
+          </Button>
+          <Button href="#resume" classes="link py-3 px-8 text-sm sm:text-base font-semibold tracking-wider transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg hover:shadow-purple/20" type="secondary">
+            View Resume
           </Button>
         </div>
       </div>
@@ -173,132 +222,144 @@ const Hero = () => {
       <div className="absolute invisible lg:visible lg:right-12 xl:right-24 2xl:right-32 top-1/2 -translate-y-1/2 select-none z-10 card-container">
         {/* Card Hanger and Holder Card Swing Wrap */}
         <div className="card-swing-wrapper">
-          {/* ID Card 3D container */}
-          <div className="id-card">
-            {/* Front Side */}
-            <div className="card-front flex flex-col items-center p-6 justify-between">
-              {/* Strap Cutout Hole */}
-              <div className="w-10 h-3 rounded-full bg-black/60 border border-white/10 mt-1 mb-3" />
-              
-              {/* Header */}
-              <div className="text-center">
-                <span className="font-mono text-[10px] tracking-wider text-purple font-bold">SHARDA UNIVERSITY</span>
-                <h4 className="text-[12px] font-sans font-extrabold tracking-widest text-white/90 leading-none">DEPT OF CSE</h4>
+          {/* ID Card Hover Wrapper */}
+          <div className="id-card-wrapper">
+            {/* ID Card 3D container */}
+            <div className="id-card">
+              {/* Front Side */}
+              <div className="card-front flex flex-col items-center p-6 justify-between">
+                {/* Strap Cutout Hole */}
+                <div className="w-10 h-3 rounded-full bg-black/60 border border-white/10 mt-1 mb-2" />
+
+                {/* Status/Major Header */}
+                <span className="font-sans text-[11px] font-extrabold tracking-widest text-white uppercase mt-1">
+                  CSE Undergrad
+                </span>
+
+                {/* Profile image */}
+                <div className="relative w-44 h-44 rounded-2xl border-2 border-purple/40 overflow-hidden mt-1 shadow-md">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/anurag_avatar.png" alt="Anurag Aryan" className="w-full h-full object-cover" />
+                </div>
+
+                {/* Personal Details */}
+                <div className="text-center mt-3 flex-1 flex flex-col justify-center">
+                  <h2 className="text-xl font-bold tracking-wide text-white leading-tight">ANURAG ARYAN</h2>
+                  <span className="font-mono text-[9px] uppercase tracking-widest text-[#00f5d4] mt-1 inline-block">FULL STACK DEVELOPER | AI Enthusiast</span>
+                </div>
+
+                {/* Barcode SVG */}
+                <svg width="130" height="24" viewBox="0 0 120 24" className="mx-auto mt-2 opacity-80">
+                  <rect x="0" y="0" width="4" height="24" fill="white" />
+                  <rect x="6" y="0" width="2" height="24" fill="white" />
+                  <rect x="10" y="0" width="6" height="24" fill="white" />
+                  <rect x="18" y="0" width="2" height="24" fill="white" />
+                  <rect x="22" y="0" width="4" height="24" fill="white" />
+                  <rect x="28" y="0" width="8" height="24" fill="white" />
+                  <rect x="38" y="0" width="2" height="24" fill="white" />
+                  <rect x="42" y="0" width="4" height="24" fill="white" />
+                  <rect x="48" y="0" width="2" height="24" fill="white" />
+                  <rect x="52" y="0" width="6" height="24" fill="white" />
+                  <rect x="60" y="0" width="4" height="24" fill="white" />
+                  <rect x="66" y="0" width="8" height="24" fill="white" />
+                  <rect x="76" y="0" width="2" height="24" fill="white" />
+                  <rect x="80" y="0" width="4" height="24" fill="white" />
+                  <rect x="86" y="0" width="2" height="24" fill="white" />
+                  <rect x="90" y="0" width="6" height="24" fill="white" />
+                  <rect x="98" y="0" width="4" height="24" fill="white" />
+                  <rect x="104" y="0" width="8" height="24" fill="white" />
+                  <rect x="114" y="0" width="2" height="24" fill="white" />
+                </svg>
               </div>
 
-              {/* Profile image */}
-              <div className="relative w-32 h-32 rounded-2xl border-2 border-purple/40 overflow-hidden mt-3 shadow-md">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/anurag_avatar.png" alt="Anurag Aryan" className="w-full h-full object-cover" />
-              </div>
+              {/* Back Side */}
+              <div className="card-back flex flex-col p-6 justify-between">
+                {/* Strap Cutout Hole */}
+                <div className="w-10 h-3 rounded-full bg-black/60 border border-white/10 mt-1 mb-2 mx-auto" />
 
-              {/* Personal Details */}
-              <div className="text-center mt-3 flex-1 flex flex-col justify-center">
-                <h2 className="text-xl font-bold tracking-wide text-white leading-tight">ANURAG ARYAN</h2>
-                <span className="font-mono text-[9px] uppercase tracking-widest text-[#00f5d4] mt-1 inline-block">FULL STACK DEVELOPER</span>
-                <p className="font-mono text-[9px] text-gray-light-3 mt-1.5">ID: 2023328197</p>
-              </div>
+                <div className="flex flex-col gap-4 mt-2 flex-1 justify-center">
+                  {/* Tech Specialization */}
+                  <div>
+                    <h4 className="font-sans text-[10px] tracking-wider text-[#00f5d4] font-extrabold uppercase border-b border-white/10 pb-1">
+                      Tech Specialization
+                    </h4>
+                    <div className="flex flex-wrap gap-1.5 mt-2">
+                      {["ReactJS", "NodeJS", "TailwindCSS", "Python", "Java", "SQL"].map((tag) => (
+                        <span key={tag} className="font-mono text-[9px] px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-gray-light-2">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
 
-              {/* Barcode SVG */}
-              <svg width="130" height="24" viewBox="0 0 120 24" className="mx-auto mt-2 opacity-80">
-                <rect x="0" y="0" width="4" height="24" fill="white" />
-                <rect x="6" y="0" width="2" height="24" fill="white" />
-                <rect x="10" y="0" width="6" height="24" fill="white" />
-                <rect x="18" y="0" width="2" height="24" fill="white" />
-                <rect x="22" y="0" width="4" height="24" fill="white" />
-                <rect x="28" y="0" width="8" height="24" fill="white" />
-                <rect x="38" y="0" width="2" height="24" fill="white" />
-                <rect x="42" y="0" width="4" height="24" fill="white" />
-                <rect x="48" y="0" width="2" height="24" fill="white" />
-                <rect x="52" y="0" width="6" height="24" fill="white" />
-                <rect x="60" y="0" width="4" height="24" fill="white" />
-                <rect x="66" y="0" width="8" height="24" fill="white" />
-                <rect x="76" y="0" width="2" height="24" fill="white" />
-                <rect x="80" y="0" width="4" height="24" fill="white" />
-                <rect x="86" y="0" width="2" height="24" fill="white" />
-                <rect x="90" y="0" width="6" height="24" fill="white" />
-                <rect x="98" y="0" width="4" height="24" fill="white" />
-                <rect x="104" y="0" width="8" height="24" fill="white" />
-                <rect x="114" y="0" width="2" height="24" fill="white" />
-              </svg>
-            </div>
-
-            {/* Back Side */}
-            <div className="card-back flex flex-col p-6 justify-between">
-              {/* Strap Cutout Hole */}
-              <div className="w-10 h-3 rounded-full bg-black/60 border border-white/10 mt-1 mb-2 mx-auto" />
-              
-              <div className="flex flex-col gap-4 mt-2 flex-1 justify-center">
-                {/* Tech Specialization */}
-                <div>
-                  <h4 className="font-sans text-[10px] tracking-wider text-[#00f5d4] font-extrabold uppercase border-b border-white/10 pb-1">
-                    Tech Specialization
-                  </h4>
-                  <div className="flex flex-wrap gap-1.5 mt-2">
-                    {["ReactJS", "NodeJS", "TailwindCSS", "Python", "Java", "SQL"].map((tag) => (
-                      <span key={tag} className="font-mono text-[9px] px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-gray-light-2">
-                        {tag}
-                      </span>
-                    ))}
+                  {/* Projects Made */}
+                  <div>
+                    <h4 className="font-sans text-[10px] tracking-wider text-purple font-extrabold uppercase border-b border-white/10 pb-1">
+                      Featured Projects
+                    </h4>
+                    <ul className="flex flex-col gap-1.5 mt-2">
+                      {PROJECTS.slice(0, 3).map((project) => (
+                        <li key={project.name} className="flex flex-col">
+                          <span className="font-sans text-[11px] font-bold text-white leading-tight">
+                            {project.name}
+                          </span>
+                          <span className="font-mono text-[9px] text-gray-light-3 leading-none">
+                            {getProjectTagline(project)}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
 
-                {/* Projects Made */}
-                <div>
-                  <h4 className="font-sans text-[10px] tracking-wider text-purple font-extrabold uppercase border-b border-white/10 pb-1">
-                    Featured Projects
-                  </h4>
-                  <ul className="flex flex-col gap-1.5 mt-2">
-                    <li className="flex flex-col">
-                      <span className="font-sans text-[11px] font-bold text-white leading-tight">Campus Crave</span>
-                      <span className="font-mono text-[9px] text-gray-light-3 leading-none">Smart Food Ordering (YOLOv8)</span>
-                    </li>
-                    <li className="flex flex-col">
-                      <span className="font-sans text-[11px] font-bold text-white leading-tight">Expense Tracker</span>
-                      <span className="font-mono text-[9px] text-gray-light-3 leading-none">Data Visualization (Chart.js)</span>
-                    </li>
-                    <li className="flex flex-col">
-                      <span className="font-sans text-[11px] font-bold text-white leading-tight">Sky Buddy</span>
-                      <span className="font-mono text-[9px] text-gray-light-3 leading-none">Weather Forecasting App</span>
-                    </li>
-                  </ul>
+                {/* Hologram authentication circle & access footer */}
+                <div className="relative mt-2 pt-2 border-t border-white/10 flex items-center justify-between">
+                  <div>
+                    <span className="font-mono text-[8px] text-gray-light-4 block uppercase leading-none">Developer ID</span>
+                    <span className="font-mono text-[10px] text-green font-bold block uppercase leading-none mt-1">Access Granted</span>
+                  </div>
+                  {/* Hologram badge */}
+                  <div className="w-12 h-12 rounded-full opacity-80"
+                    style={{
+                      background: "radial-gradient(circle, #00f5d4 0%, #8b31ff 50%, #7000ff 100%)",
+                      filter: "hue-rotate(30deg) brightness(1.1)",
+                      boxShadow: "0 0 10px rgba(0,245,212,0.3)"
+                    }} />
                 </div>
-              </div>
-
-              {/* Hologram authentication circle & access footer */}
-              <div className="relative mt-2 pt-2 border-t border-white/10 flex items-center justify-between">
-                <div>
-                  <span className="font-mono text-[8px] text-gray-light-4 block uppercase leading-none">Developer ID</span>
-                  <span className="font-mono text-[10px] text-green font-bold block uppercase leading-none mt-1">Access Granted</span>
-                </div>
-                {/* Hologram badge */}
-                <div className="w-12 h-12 rounded-full opacity-80"
-                     style={{
-                       background: "radial-gradient(circle, #00f5d4 0%, #8b31ff 50%, #7000ff 100%)",
-                       filter: "hue-rotate(30deg) brightness(1.1)",
-                       boxShadow: "0 0 10px rgba(0,245,212,0.3)"
-                     }} />
               </div>
             </div>
           </div>
 
-          {/* Lanyard Strap SVG - Placed below id-card in markup for sibling selectors */}
-          <svg width="80" height="240" viewBox="0 0 80 240" fill="none" className="absolute left-1/2 -translate-x-1/2 -top-[210px] z-0 pointer-events-none">
+          {/* Lanyard Strap SVG - Placed below id-card-wrapper in markup for sibling selectors */}
+          <svg width="80" height="1000" viewBox="0 0 80 1000" fill="none" className="absolute left-1/2 -translate-x-1/2 -top-[970px] z-0 pointer-events-none">
+            <defs>
+              <linearGradient id="purpleRibbon" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#5b1bbb" />
+                <stop offset="50%" stopColor="#8b31ff" />
+                <stop offset="100%" stopColor="#5b1bbb" />
+              </linearGradient>
+              <linearGradient id="cyanStripe" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#00d2b4" />
+                <stop offset="50%" stopColor="#00f5d4" />
+                <stop offset="100%" stopColor="#00d2b4" />
+              </linearGradient>
+            </defs>
+
             {/* Lanyard Cord - UNTWISTED State */}
-            <path className="lanyard-untwisted" d="M15 0 C 15 160, 35 190, 40 215" stroke="#8b31ff" strokeWidth="6" strokeLinecap="round" fill="none" opacity="0.8" />
-            <path className="lanyard-untwisted" d="M65 0 C 65 160, 45 190, 40 215" stroke="#8b31ff" strokeWidth="6" strokeLinecap="round" fill="none" opacity="0.8" />
-            <path className="lanyard-untwisted" d="M15 0 C 15 160, 35 190, 40 215" stroke="#00f5d4" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.9" />
-            <path className="lanyard-untwisted" d="M65 0 C 65 160, 45 190, 40 215" stroke="#00f5d4" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.9" />
+            <path className="lanyard-untwisted" d="M15 0 C 15 800, 35 920, 40 975" stroke="url(#purpleRibbon)" strokeWidth="16" strokeLinecap="square" fill="none" />
+            <path className="lanyard-untwisted" d="M65 0 C 65 800, 45 920, 40 975" stroke="url(#purpleRibbon)" strokeWidth="16" strokeLinecap="square" fill="none" />
+            <path className="lanyard-untwisted" d="M15 0 C 15 800, 35 920, 40 975" stroke="url(#cyanStripe)" strokeWidth="4" strokeLinecap="square" fill="none" />
+            <path className="lanyard-untwisted" d="M65 0 C 65 800, 45 920, 40 975" stroke="url(#cyanStripe)" strokeWidth="4" strokeLinecap="square" fill="none" />
 
             {/* Lanyard Cord - TWISTED State (paths cross in the middle) */}
-            <path className="lanyard-twisted" d="M15 0 C 15 110, 55 130, 40 215" stroke="#8b31ff" strokeWidth="6" strokeLinecap="round" fill="none" opacity="0.8" />
-            <path className="lanyard-twisted" d="M65 0 C 65 110, 25 130, 40 215" stroke="#8b31ff" strokeWidth="6" strokeLinecap="round" fill="none" opacity="0.8" />
-            <path className="lanyard-twisted" d="M15 0 C 15 110, 55 130, 40 215" stroke="#00f5d4" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.9" />
-            <path className="lanyard-twisted" d="M65 0 C 65 110, 25 130, 40 215" stroke="#00f5d4" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.9" />
+            <path className="lanyard-twisted" d="M15 0 C 15 600, 55 750, 40 975" stroke="url(#purpleRibbon)" strokeWidth="16" strokeLinecap="square" fill="none" />
+            <path className="lanyard-twisted" d="M65 0 C 65 600, 25 750, 40 975" stroke="url(#purpleRibbon)" strokeWidth="16" strokeLinecap="square" fill="none" />
+            <path className="lanyard-twisted" d="M15 0 C 15 600, 55 750, 40 975" stroke="url(#cyanStripe)" strokeWidth="4" strokeLinecap="square" fill="none" />
+            <path className="lanyard-twisted" d="M65 0 C 65 600, 25 750, 40 975" stroke="url(#cyanStripe)" strokeWidth="4" strokeLinecap="square" fill="none" />
 
             {/* Metal Ring & Strap Clip */}
-            <circle cx="40" cy="215" r="8" fill="#555555" stroke="#999" strokeWidth="2" />
-            <rect x="36" y="217" width="8" height="15" fill="#444" rx="1" />
+            <circle cx="40" cy="975" r="10" fill="#555555" stroke="#999" strokeWidth="2" />
+            <rect x="36" y="977" width="8" height="18" fill="#444" rx="1" />
           </svg>
         </div>
       </div>

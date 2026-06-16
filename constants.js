@@ -1,6 +1,6 @@
 export const METADATA = {
   author: "Anurag Aryan",
-  title: "Anurag Aryan | Full Stack Dev & Agentic AI Enthusiast",
+  title: "Anurag Aryan | Full Stack Dev & AI Enthusiast",
   description:
     "Final-year Computer Science and Engineering undergraduate at Sharda University passionate about web development and building practical digital solutions. Skilled in HTML, CSS, JavaScript, ReactJS, and Tailwind CSS.",
   siteUrl: "https://github.com/awwwwnurag",
@@ -38,23 +38,28 @@ export const MENULINKS = [
     ref: "work",
   },
   {
+    name: "Resume",
+    ref: "resume",
+  },
+  {
     name: "Contact",
     ref: "contact",
   },
 ];
 
 export const TYPED_STRINGS = [
-  "a Full Stack Developer",
-  "an Agentic AI Explorer",
+  "a Full Stack Developer &amp; AI Explorer",
+  "building Intelligent &amp; Practical Solutions",
   "passionate about Web Development",
-  "builder of practical digital solutions",
-  "builder of intelligent systems",
+  "turning Ideas into Digital Products",
+  "builder of Smart Web Experiences",
+  "creating Real-World Solutions Through Code",
 ];
 
 export const SOCIAL_LINKS = [
   {
-    name: "mail",
-    url: "mailto:anuragaryannn@gmail.com",
+    name: "twitter",
+    url: "https://x.com/awwwwnurag",
   },
   {
     name: "linkedin",
@@ -63,6 +68,10 @@ export const SOCIAL_LINKS = [
   {
     name: "github",
     url: "https://github.com/awwwwnurag",
+  },
+  {
+    name: "mail",
+    url: "mailto:anuragaryannn@gmail.com",
   },
 ];
 
@@ -91,8 +100,8 @@ export const PROJECTS = [
     imageKey: "expense-tracker",
     description: "Developed a responsive expense tracking web application using JavaScript to record, manage, and categorize daily financial transactions. Integrated Chart.js to implement interactive bar and pie charts.",
     gradient: ["#8b31ff", "#7000ff"],
-    url: "https://github.com/awwwwnurag/expense-tracker",
-    github: "https://github.com/awwwwnurag/expense-tracker",
+    url: "https://github.com/awwwwnurag/Expense-Tracker-with-Data-Visualisation",
+    github: "https://github.com/awwwwnurag/Expense-Tracker-with-Data-Visualisation",
     tech: ["javascript"],
     category: "Frontend",
     num: "// 01",
@@ -138,9 +147,30 @@ export const PROJECTS = [
     icon: "✈️",
     tags: ["React", "Tailwind", "Gemini AI", "Google Maps", "Auth0", "Vite", "Firebase"],
   },
+  {
+    name: "Sky Buddy",
+    imageKey: "sky-buddy",
+    description: "A responsive weather application providing real-time weather updates and a 5-day forecast for cities worldwide. Features an explore section and customizable city lists, utilizing OpenWeatherMap API.",
+    gradient: ["#00c6ff", "#0072ff"],
+    url: "https://github.com/awwwwnurag/Sky-Buddy",
+    github: "https://github.com/awwwwnurag/Sky-Buddy",
+    tech: ["javascript"],
+    category: "Frontend",
+    num: "// 05",
+    icon: "🌤️",
+    tags: ["HTML", "CSS", "JS", "OpenWeatherMap API"],
+  },
 ];
 
 export const WORK_CONTENTS = [
+  {
+    icon: "🎓",
+    date: "May 2025 - June 2025",
+    title: "Full Stack Developer Bootcamp",
+    company: "Sharda University",
+    description: "Participated in a comprehensive full-stack development bootcamp covering modern frontend and backend technologies. Gained hands-on experience by building and deploying interactive web applications in a collaborative, agile project environment.",
+    tags: ["HTML", "CSS", "JavaScript", "ReactJS", "Backend Integration", "Agile"],
+  },
   {
     icon: "💻",
     date: "Mar 2025 - May 2025",
@@ -149,14 +179,7 @@ export const WORK_CONTENTS = [
     description: "Developed and maintained responsive web applications, implementing interactive features and optimizing performance. Improved UI responsiveness and reduced load times by 20% to contribute to successful project deliveries.",
     tags: ["HTML", "CSS", "JavaScript", "ReactJS", "Tailwind CSS", "Vite"],
   },
-  {
-    icon: "🎓",
-    date: "2022 - Present",
-    title: "Computer Science & Engineering Student",
-    company: "Sharda University",
-    description: "Final-year Computer Science and Engineering undergraduate student. Possesses a strong problem-solving mindset, exploring Agentic AI concepts, and interested in building intelligent, user-centric web applications.",
-    tags: ["Computer Science", "Agentic AI", "Software Engineering"],
-  },
+
 ];
 
 export const GTAG = "G-5HCTL2TJ5W";

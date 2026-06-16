@@ -5,9 +5,13 @@ import { MENULINKS, WORK_CONTENTS } from "../../constants";
 
 const Work = () => {
   const sectionRef = useRef(null);
+  const progressBarRef = useRef(null);
+  const progressDotRef = useRef(null);
+  const progressContainerRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Reveal items
       const tl = gsap
         .timeline({ defaults: { ease: "none" } })
         .from(
@@ -23,6 +27,53 @@ const Work = () => {
         scrub: 0,
         animation: tl,
       });
+
+      // moncy.dev scroll-triggered progress line animation
+      const progressTimeline = gsap.timeline({ defaults: { ease: "none" } });
+      progressTimeline
+        .to(progressBarRef.current, { height: "100%" })
+        .to(progressDotRef.current, { top: "100%" }, "<");
+
+      ScrollTrigger.create({
+        trigger: progressContainerRef.current,
+        start: "top 70%",
+        end: "bottom 70%",
+        scrub: 0.5,
+        animation: progressTimeline,
+      });
+
+      // Scroll-triggered timeline dot activation (glowing when crossed)
+      sectionRef.current.querySelectorAll(".work-item").forEach((item) => {
+        const dot = item.querySelector(".timeline-dot");
+        const innerDot = item.querySelector(".timeline-inner-dot");
+        
+        const dotTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: dot,
+            start: "top 70%",
+            toggleActions: "play none none reverse",
+            onEnter: () => {
+              dot.classList.add("timeline-dot-glow");
+            },
+            onLeaveBack: () => {
+              dot.classList.remove("timeline-dot-glow");
+            }
+          }
+        });
+
+        dotTimeline
+          .to(dot, {
+            borderColor: "#8b31ff",
+            backgroundColor: "#000000",
+            duration: 0.25,
+          })
+          .to(innerDot, {
+            scale: 1,
+            opacity: 1,
+            backgroundColor: "#8b31ff",
+            duration: 0.25,
+          }, "<");
+      });
     });
 
     return () => ctx.revert();
@@ -33,7 +84,7 @@ const Work = () => {
       ref={sectionRef}
       id={MENULINKS[3].ref}
       aria-label="Work Experience"
-      className="w-full relative select-none xs:mt-40 sm:mt-72 mb-96"
+      className="w-full relative select-none mt-16 sm:mt-24 mb-4 sm:mb-6"
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
@@ -44,13 +95,10 @@ const Work = () => {
         width={320}
         alt="left pattern"
       />
-      <div className="section-container py-16 flex flex-col justify-center">
+      <div className="section-container pt-16 pb-4 flex flex-col justify-center">
         <div className="flex flex-col work-wrapper">
           <div className="flex flex-col">
-            <p className="uppercase tracking-widest text-gray-light-1 staggered-reveal">
-              WORK
-            </p>
-            <h2 className="text-6xl mt-2 font-medium text-gradient w-fit staggered-reveal">
+            <h2 className="text-6xl font-medium text-gradient w-fit staggered-reveal">
               Experience
             </h2>
             <p className="text-[1.65rem] font-medium md:max-w-lg w-full mt-2 staggered-reveal">
@@ -58,12 +106,31 @@ const Work = () => {
             </p>
           </div>
 
-          <div className="mt-16 max-w-3xl mx-auto w-full flex flex-col gap-12 relative pl-8 border-l border-gray-dark-1">
+          <div 
+            ref={progressContainerRef}
+            className="mt-16 max-w-3xl mx-auto w-full flex flex-col gap-12 relative pl-8"
+          >
+            {/* Custom Interactive Progress Line (moncy.dev effect) */}
+            <div className="absolute left-[3px] top-4 bottom-4 w-[2px] bg-gray-dark-1/40 pointer-events-none">
+              {/* Progress Fill Line */}
+              <div 
+                ref={progressBarRef}
+                className="absolute top-0 left-0 w-full bg-gradient-to-b from-purple to-[#00f5d4] origin-top"
+                style={{ height: "0%" }}
+              />
+              {/* Glowing Circle Bead at the tip */}
+              <div 
+                ref={progressDotRef}
+                className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-purple border-2 border-white shadow-[0_0_12px_#9f55ff,0_0_25px_#8b31ff] pointer-events-none z-20"
+                style={{ top: "0%", transform: "translate(-50%, -50%)" }}
+              />
+            </div>
+
             {WORK_CONTENTS.map((exp, index) => (
-              <div key={exp.company + index} className="relative staggered-reveal flex flex-col gap-2">
+              <div key={exp.company + index} className="work-item relative staggered-reveal flex flex-col gap-2">
                 {/* Timeline Dot */}
-                <div className="absolute -left-[41px] top-3.5 w-6 h-6 rounded-full bg-black border-2 border-purple flex items-center justify-center z-10 shadow-md">
-                  <div className="w-2.5 h-2.5 rounded-full bg-purple" />
+                <div className="timeline-dot absolute -left-[41px] top-3.5 w-6 h-6 rounded-full bg-gray-dark-3 border-2 border-white/10 flex items-center justify-center z-10 shadow-md">
+                  <div className="timeline-inner-dot w-2.5 h-2.5 rounded-full bg-white/10 scale-0 origin-center" />
                 </div>
                 
                 {/* Content Card */}
@@ -81,7 +148,7 @@ const Work = () => {
                     </span>
                   </div>
                   
-                  <p className="mt-4 text-gray-light-3 leading-relaxed text-sm md:text-base">
+                  <p className="mt-4 text-gray-light-3 leading-relaxed text-sm md:text-base whitespace-pre-line">
                     {exp.description}
                   </p>
                   

@@ -9,11 +9,10 @@ import Cursor from "@/components/Cursor/Cursor";
 import Hero from "@/components/Hero/Hero";
 import About1 from "@/components/About/About1";
 import Skills from "@/components/Skills/Skills";
-import About2 from "@/components/About/About2";
 import Projects from "@/components/Projects/Projects";
 import Work from "@/components/Work/Work";
+import Resume from "@/components/Resume/Resume";
 import Collaboration from "@/components/Collaboration/Collaboration";
-import Contact from "@/components/Contact/Contact";
 import Footer from "@/components/Footer/Footer";
 import Background from "@/components/Background/Background";
 import { displayFancyLogs } from "utils/log";
@@ -56,21 +55,15 @@ export default function Home() {
           <ProgressIndicator />
           <Cursor isDesktop={isDesktop} />
           <main className="flex flex-col">
-            <div
-              role="img"
-              className="text-gray-light-1 opacity-10 sm:text-9xl xs:text-8xl inline-block -z-10 absolute rotate-90 right-0 md:top-52 xs:top-96"
-            >
-              DEV
-            </div>
+
             <Background />
             <Hero />
             <About1 clientHeight={clientHeight} />
             <Skills />
-            <About2 clientHeight={clientHeight} />
             <Projects isDesktop={isDesktop} clientHeight={clientHeight} />
             <Work isDesktop={isDesktop} />
+            <Resume />
             <Collaboration clientHeight={clientHeight} />
-            <Contact />
           </main>
           <Footer />
         </>

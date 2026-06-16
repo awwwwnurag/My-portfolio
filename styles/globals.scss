@@ -805,3 +805,23 @@ $bg: #f4faff;
 #mouth-frown {
   visibility: hidden;
 }
+
+@keyframes timelinePulseGlow {
+  0% {
+    border-color: #8b31ff;
+    box-shadow: 0 0 12px rgba(139, 49, 255, 0.6), inset 0 0 4px rgba(139, 49, 255, 0.3);
+  }
+  50% {
+    border-color: #a366ff;
+    box-shadow: 0 0 25px rgba(139, 49, 255, 0.95), 0 0 12px rgba(163, 102, 255, 0.6), inset 0 0 8px rgba(139, 49, 255, 0.5);
+  }
+  100% {
+    border-color: #8b31ff;
+    box-shadow: 0 0 12px rgba(139, 49, 255, 0.6), inset 0 0 4px rgba(139, 49, 255, 0.3);
+  }
+}
+
+.timeline-dot-glow {
+  animation: timelinePulseGlow 2s infinite ease-in-out !important;
+  background-color: #000000 !important;
+}

@@ -57,16 +57,15 @@ const Collaboration = ({ clientHeight }) => {
   }, []);
 
   return (
-    <section ref={sectionRef} aria-label="Collaboration" className="w-full relative select-none my-40">
+    <section ref={sectionRef} aria-label="Collaboration" className="w-full relative select-none mt-16 sm:mt-24 mb-8">
       <div
-        className={`${
-          clientHeight > 650 ? "py-36" : "py-48"
-        } section-container flex flex-col`}
+        className={`${clientHeight > 650 ? "py-12" : "py-16"
+          } section-container flex flex-col`}
       >
         <p className="opacity-40 text-6xl sm:text-7xl font-semibold whitespace-nowrap ui-left transform-gpu">
           {Array(5)
             .fill(
-              " Full Stack Development Machine Learning Software Architecture "
+              " Full Stack Development • Artifical Intelligence • Cloud Computing • ReactJS • Software Engineering • MERN Stack • "
             )
             .reduce((str, el) => str.concat(el), "")}{" "}
         </p>
@@ -94,7 +93,7 @@ const Collaboration = ({ clientHeight }) => {
         <p className="mt-6 md:mt-8 opacity-40 text-6xl sm:text-7xl font-semibold whitespace-nowrap ui-right transform-gpu">
           {Array(5)
             .fill(
-              " Computer Vision Natural Language Processing MERN Stack Development "
+              " MERN Stack • Docker & AWS • Artifical Intelligence • ReactJS • Full Stack Development • Software Engineering • ReactJS • "
             )
             .reduce((str, el) => str.concat(el), "")}{" "}
         </p>

@@ -10,10 +10,13 @@ import tesla from "../../public/projects/tesla.webp";
 import eduBridge from "../../public/projects/edu-bridge.png";
 import safar from "../../public/projects/safar.png";
 import campusCrave from "../../public/projects/campus-crave.png";
+import skyBuddy from "../../public/projects/sky-buddy.png";
+import expenseTracker from "../../public/projects/expense-tracker.png";
 
 export const PROJECT_IMAGES = {
-  "expense-tracker": dukaan,
+  "expense-tracker": expenseTracker,
   "campus-crave": campusCrave,
   "edu-bridge": eduBridge,
   "safar": safar,
+  "sky-buddy": skyBuddy,
 };

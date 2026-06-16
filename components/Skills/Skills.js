@@ -34,7 +34,7 @@ const Skills = () => {
       ref={sectionRef}
       id={MENULINKS[1].ref}
       aria-label="Skills"
-      className="w-full relative select-none mt-44"
+      className="w-full relative select-none mt-16 sm:mt-24 mb-16 sm:mb-24"
     >
       <div className="section-container py-16 flex flex-col justify-center">
         <img
@@ -47,14 +47,11 @@ const Skills = () => {
         />
         <div className="flex flex-col skills-wrapper">
           <div className="flex flex-col">
-            <p className="uppercase tracking-widest text-gray-light-1 staggered-reveal">
-              SKILLS
-            </p>
-            <h2 className="text-6xl mt-2 font-medium text-gradient w-fit staggered-reveal">
+            <h2 className="text-6xl font-medium text-gradient w-fit staggered-reveal">
               My Skills
             </h2>
             <p className="text-[1.65rem] font-medium md:max-w-lg w-full mt-2 staggered-reveal">
-              I like to take responsibility to craft modern applications and intelligent systems using clean and performant code.{" "}
+              Turning ideas into modern applications and intelligent systems through clean, efficient, and scalable code.{" "}
             </p>
           </div>
 

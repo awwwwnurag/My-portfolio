@@ -93,10 +93,7 @@ const Projects = ({ isDesktop, clientHeight }) => {
           className="flex flex-col inner-container transform-gpu"
           ref={sectionTitleRef}
         >
-          <p className="uppercase tracking-widest text-gray-light-1 staggered-reveal">
-            PROJECTS
-          </p>
-          <h2 className="text-6xl mt-2 font-medium text-gradient w-fit staggered-reveal">
+          <h2 className="text-6xl font-medium text-gradient w-fit staggered-reveal">
             My Projects
           </h2>
           <p className="text-[1.65rem] font-medium md:max-w-lg max-w-sm mt-2 staggered-reveal">
@@ -116,6 +113,7 @@ const Projects = ({ isDesktop, clientHeight }) => {
               }
               project={project}
               key={project.name}
+              isDesktop={isDesktop}
             />
           ))}
         </div>
