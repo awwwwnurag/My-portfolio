@@ -63,15 +63,11 @@ export const SOCIAL_LINKS = [
   },
   {
     name: "linkedin",
-    url: "https://www.linkedin.com/in/anurag-aryan/",
+    url: "https://www.linkedin.com/in/anurag-aryannn/",
   },
   {
     name: "github",
     url: "https://github.com/awwwwnurag",
-  },
-  {
-    name: "mail",
-    url: "mailto:anuragaryannn@gmail.com",
   },
 ];
 
