@@ -69,6 +69,10 @@ export const SOCIAL_LINKS = [
     name: "github",
     url: "https://github.com/awwwwnurag",
   },
+  {
+    name: "mail",
+    url: "mailto:anuragaryannn@gmail.com",
+  },
 ];
 
 export const SKILLS = [

@@ -41,7 +41,7 @@ const Footer = () => {
           </p>
 
           <div className="mt-8 text-center">
-            <Profiles />
+            <Profiles exclude={["mail"]} />
           </div>
 
           <div className="pt-3 text-center">
